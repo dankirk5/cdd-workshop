@@ -1,6 +1,6 @@
 Import-Module sqlps -DisableNameChecking
 
-$databaseName = "Green"
+$databaseName = "payroll"
 $serverPath = "SQLSERVER:\SQL\localhost\Default"
 
 function baseline($serverPath, $databaseName)
@@ -19,9 +19,10 @@ function baseline($serverPath, $databaseName)
 	$scripter.Options.DriAll = $True
 	$scripter.Options.Statistics = $False
 
+	# $objectsToScript = $database.Schemas | Where-Object { !$_.IsSystemObject }
 	$objectsToScript = $database.Tables + $database.Views + $database.StoredProcedures + $database.UserDefinedFunctions
-
-	$scripter.Script([Microsoft.SqlServer.Management.Smo.SqlSmoObject[]]($objectsToScript))
+    $smoObjects = [Microsoft.SqlServer.Management.Smo.SqlSmoObject[]]($objectsToScript)
+	$scripter.Script($smoObjects)
 
 	# Notes:
 	# Don't script out create database statement, just structures, that way you can create a new database from scratch with any database name	

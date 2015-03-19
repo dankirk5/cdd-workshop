@@ -1,6 +1,6 @@
 ﻿Import-Module sqlps -DisableNameChecking
 
-$databaseName = "Green"
+$databaseName = "payroll"
 $backupTo = join-path (Get-Location) "$databaseName.bak"
 $serverPath = "SQLSERVER:\SQL\localhost\Default"
 
